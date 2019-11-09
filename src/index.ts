@@ -208,6 +208,7 @@ export async function downloadBook (bookId: string) {
   await downloadEpubContainer(baseUrl, tmpBookDir)
   const bookMeta = await downloadEpubContent(opfUrl, opf, tmpBookDir)
   await downloadEpubAssets(bookMeta, navLink, tmpBookDir)
+  await generateMimeType(tmpBookDir)
 
   return tmpBookDir
 }
@@ -255,6 +256,12 @@ async function downloadEpubAssets (bookMeta: any, navLink: string, tmpBookDir: s
       fs.writeFileSync(filename, data)
     }
   }))
+}
+
+async function generateMimeType(tmpBookDir: string) {
+  const filename = path.join(tmpBookDir, 'mimetype')
+  fs.ensureFileSync(filename)
+  fs.writeFileSync(filename, 'application/epub+zip')
 }
 
 export async function generateEpub (title: string, dir: string, outputFolder: string = downloadDir()): Promise<string> {
