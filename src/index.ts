@@ -116,7 +116,8 @@ class Credential {
     ]
 
     return {
-      Cookie: cookies.filter(Boolean).join(' ')
+      Cookie: cookies.filter(Boolean).join(' '),
+      Referer: 'https://reader.readmoo.com/reader/index.html'
     }
   }
 
