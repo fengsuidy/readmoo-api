@@ -87,7 +87,8 @@ class Credential {
             this.cloudFrontSignature
         ];
         return {
-            Cookie: cookies.filter(Boolean).join(' ')
+            Cookie: cookies.filter(Boolean).join(' '),
+            Referer: 'https://reader.readmoo.com/reader/index.html'
         };
     }
     load() {
@@ -168,6 +169,7 @@ function downloadBook(bookId) {
         yield downloadEpubContainer(baseUrl, tmpBookDir);
         const bookMeta = yield downloadEpubContent(opfUrl, opf, tmpBookDir);
         yield downloadEpubAssets(bookMeta, navLink, tmpBookDir);
+        yield generateMimeType(tmpBookDir);
         return tmpBookDir;
     });
 }
@@ -215,6 +217,13 @@ function downloadEpubAssets(bookMeta, navLink, tmpBookDir) {
                 fs.writeFileSync(filename, data);
             }
         })));
+    });
+}
+function generateMimeType(tmpBookDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const filename = path.join(tmpBookDir, 'mimetype');
+        fs.ensureFileSync(filename);
+        fs.writeFileSync(filename, 'application/epub+zip');
     });
 }
 function generateEpub(title, dir, outputFolder = downloadDir()) {
