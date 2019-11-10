@@ -11,6 +11,7 @@ declare class Credential {
     saveCredentials(res: AxiosResponse): void;
     getHeaders(): {
         Cookie: string;
+        Referer: string;
     };
     private load;
 }
