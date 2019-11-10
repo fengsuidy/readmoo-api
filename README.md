@@ -7,7 +7,7 @@
 Install with npm global option:
 
 ```bash
-npm i Yukaii/readmoo-api#v1.0.0 -g
+npm i Yukaii/readmoo-api#v1.1.0 -g
 ```
 
 And type the command `readmoo-dl`:
